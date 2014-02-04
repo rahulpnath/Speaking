@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="Samples.W8.PhotoStreamsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Samples.W8"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource
+        x:Name="groupedItemsViewSource"
+        Source="{Binding PhotoStreams}"
+        IsSourceGrouped="true"
+        ItemsPath="photos" />
+    </Page.Resources>
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="My Sample" FontSize="50" Padding="20" />
+        
+        <GridView  IsSwipeEnabled="False" Grid.Row="1" ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" HorizontalAlignment="Stretch">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Image Width="250" Height="250" Source="{Binding image_url}" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontSize="30" Text="{Binding feature}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,80,0"/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+
+            <GridView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="52,0,0,10"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+
+        </GridView>
+    </Grid>
+</Page>
